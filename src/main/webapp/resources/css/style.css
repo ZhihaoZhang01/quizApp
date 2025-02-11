@@ -1,0 +1,226 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+.container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+.container input[type="text"],
+.container input[type="email"],
+.container input[type="password"],
+.container textarea,
+.container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.container button,
+.container input[type="submit"] {
+    width: 100%;
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.container button:hover,
+.container input[type="submit"]:hover {
+    background-color: #286090;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+#navbar, #admin-navbar {
+    background-color: #eee;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+#navbar ul, #admin-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+#navbar li, #admin-navbar li {
+    margin: 0;
+}
+
+form {
+    margin-top: 20px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+button, input[type="submit"] {
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover, input[type="submit"]:hover {
+    background-color: #286090;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table, th, td {
+    border: 1px solid #ccc;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+.pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.pagination a:hover {
+    background-color: #eee;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #f00;
+    background-color: #ffe6e6;
+    color: #f00;
+}
+
+.button-group button {
+    margin-right: 10px;
+}
+
+.correct {
+    background-color: #c8e6c9;
+}
+.incorrect {
+    background-color: #ffcdd2;
+}
+.missed {
+    background-color: #e0f7fa;
+}
+.default {
+    background-color: #fff;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+
+.pad-10 {
+    padding: 10px;
+}
+
+#admin-navbar {
+    background-color: #ddd;
+}
+#admin-navbar a {
+    color: #333;
+    font-weight: bold;
+}
+#admin-navbar a:hover {
+    color: #000;
+}
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eee;
+    padding: 10px;
+}
+#navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+#navbar li a {
+    text-decoration: none;
+    color: #333;
+}
+#logo img {
+    max-height: 40px;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #eee;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9em;
+    color: #666;
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
