@@ -20,11 +20,12 @@ import java.util.List;
 @Repository("hibernateUserDAO")
 @Primary
 public class UserDaoHibernateImpl implements IUserDAO {
+
     @Autowired
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
 
     private SessionFactory getSessionFactory() {
-        return emf.unwrap(SessionFactory.class);
+        return sessionFactory;
     }
 
     private Session getCurrentSession() {

@@ -7,32 +7,25 @@ import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 
-/**
- * @author Zhihao Zhang
- * @description TODO
- * @date 2025-02-01 6:44 PM
- */
-
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Immutable
-@Table(name = "QuizHistory")
+@Table(name = "QuizHistory")  // 此表名仅用于映射，不会实际存在于数据库中
 @SqlResultSetMapping(
         name = "QuizHistoryMapping",
         classes = {
                 @ConstructorResult(
                         targetClass = QuizHistory.class,
                         columns = {
-                                @ColumnResult(name = "quiz_id", type = Integer.class),
-                                @ColumnResult(name = "quizName", type = String.class),
-                                @ColumnResult(name = "categoryName", type = String.class),
-                                @ColumnResult(name = "startTime", type = String.class),
-                                @ColumnResult(name = "endTime", type = String.class),
-                                @ColumnResult(name = "score", type = Integer.class),
-                                @ColumnResult(name = "result", type = String.class),
-                                @ColumnResult(name = "userName", type = String.class)
+                                @ColumnResult(name = "QUIZ_ID", type = Integer.class),
+                                @ColumnResult(name = "QUIZNAME", type = String.class),
+                                @ColumnResult(name = "CATEGORYNAME", type = String.class),
+                                @ColumnResult(name = "STARTTIME", type = String.class),
+                                @ColumnResult(name = "ENDTIME", type = String.class),
+                                @ColumnResult(name = "SCORE", type = Integer.class),
+                                @ColumnResult(name = "RESULT", type = String.class),
+                                @ColumnResult(name = "USERNAME", type = String.class)
                         }
                 )
         }
@@ -47,4 +40,15 @@ public class QuizHistory {
     private int score;
     private String result;
     private String userName;
+
+    public QuizHistory(int quizId, String quizName, String categoryName, String startTime, String endTime, int score, String result, String userName) {
+        this.quizId = quizId;
+        this.quizName = quizName;
+        this.categoryName = categoryName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.score = score;
+        this.result = result;
+        this.userName = userName;
+    }
 }

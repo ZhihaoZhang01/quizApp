@@ -3,6 +3,8 @@ package com.zhihao.quizapp.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -32,6 +34,8 @@ public class Contact {
     @Column(nullable = false)
     private String email;
 
+
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "`time`", nullable = false, updatable = false)
     private Date time;

@@ -5,6 +5,7 @@ import com.zhihao.quizapp.model.Category;
 import com.zhihao.quizapp.model.Quiz;
 import com.zhihao.quizapp.model.User;
 import com.zhihao.quizapp.model.QuizHistory;
+import lombok.var;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ import java.util.List;
 public class QuizDaoHibernateImpl implements IQuizDAO {
 
     @Autowired
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
 
     private SessionFactory getSessionFactory() {
-        return emf.unwrap(SessionFactory.class);
+        return sessionFactory;
     }
 
     private Session getCurrentSession() {
@@ -93,33 +94,43 @@ public class QuizDaoHibernateImpl implements IQuizDAO {
 
     @Override
     public List<QuizHistory> getQuizHistories(int offset, int limit, String category, String userEmail) {
-        String sql = "SELECT q.quiz_id as quizId, " +
-                "CONCAT(u.firstname, q.quiz_id) as quizName, " +
-                "c.name as categoryName, " +
-                "DATE_FORMAT(q.time_start, '%Y-%m-%d %H:%i:%s') as startTime, " +
-                "CASE WHEN q.time_end IS NOT NULL THEN DATE_FORMAT(q.time_end, '%Y-%m-%d %H:%i:%s') ELSE 'Pending' END as endTime, " +
-                "(SELECT COUNT(*) FROM QuizQuestion qq JOIN Choice c2 ON qq.user_choice_id = c2.choice_id WHERE qq.quiz_id = q.quiz_id AND c2.is_correct = 1) as score, " +
-                "CASE WHEN (SELECT COUNT(*) FROM QuizQuestion qq JOIN Choice c2 ON qq.user_choice_id = c2.choice_id WHERE qq.quiz_id = q.quiz_id AND c2.is_correct = 1) > 3 THEN 'Pass' ELSE 'Fail' END as result, " +
-                "CONCAT(u.firstname, ' ', u.lastname) as userName " +
-                "FROM Quiz q " +
-                "JOIN User u ON q.user_id = u.user_id " +
-                "JOIN Category c ON q.category_id = c.category_id ";
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT q.quiz_id AS QUIZ_ID, ");
+        sql.append("CONCAT(u.firstname, q.quiz_id) AS QUIZNAME, ");
+        sql.append("c.name AS CATEGORYNAME, ");
+        sql.append("DATE_FORMAT(q.time_start, '%Y-%m-%d %H:%i:%s') AS STARTTIME, ");
+        sql.append("CASE WHEN q.time_end IS NOT NULL THEN DATE_FORMAT(q.time_end, '%Y-%m-%d %H:%i:%s') ELSE 'Pending' END AS ENDTIME, ");
+        sql.append("(SELECT COUNT(*) FROM QuizQuestion qq JOIN Choice c2 ON qq.user_choice_id = c2.choice_id WHERE qq.quiz_id = q.quiz_id AND c2.is_correct = 1) AS SCORE, ");
+        sql.append("CASE WHEN (SELECT COUNT(*) FROM QuizQuestion qq JOIN Choice c2 ON qq.user_choice_id = c2.choice_id WHERE qq.quiz_id = q.quiz_id AND c2.is_correct = 1) > 3 THEN 'Pass' ELSE 'Fail' END AS RESULT, ");
+        sql.append("CONCAT(u.firstname, ' ', u.lastname) AS USERNAME ");
+        sql.append("FROM Quiz q ");
+        sql.append("JOIN User u ON q.user_id = u.user_id ");
+        sql.append("JOIN Category c ON q.category_id = c.category_id ");
+
+        boolean whereAdded = false;
         if (category != null && !category.isEmpty()) {
-            sql += "WHERE c.name = :category ";
+            sql.append("WHERE c.name = :category ");
+            whereAdded = true;
         }
         if (userEmail != null && !userEmail.isEmpty()) {
-            if(sql.contains("WHERE")){
-                sql += "AND u.email = :userEmail ";
+            if (whereAdded) {
+                sql.append("AND u.email = :userEmail ");
             } else {
-                sql += "WHERE u.email = :userEmail ";
+                sql.append("WHERE u.email = :userEmail ");
             }
         }
-        sql += "ORDER BY q.time_end DESC LIMIT :limit OFFSET :offset";
-        return getCurrentSession().createNativeQuery(sql, "QuizHistoryMapping")
+        sql.append("ORDER BY q.time_end DESC LIMIT :limit OFFSET :offset");
+
+        var query = getCurrentSession().createNativeQuery(sql.toString(), "QuizHistoryMapping")
                 .setParameter("offset", offset)
-                .setParameter("limit", limit)
-                .setParameter("category", category)
-                .setParameter("userEmail", userEmail)
-                .list();
+                .setParameter("limit", limit);
+
+        if (category != null && !category.isEmpty()) {
+            query.setParameter("category", category);
+        }
+        if (userEmail != null && !userEmail.isEmpty()) {
+            query.setParameter("userEmail", userEmail);
+        }
+        return query.list();
     }
 }

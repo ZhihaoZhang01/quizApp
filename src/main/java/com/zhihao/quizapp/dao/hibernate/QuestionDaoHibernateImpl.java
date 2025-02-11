@@ -22,10 +22,10 @@ import java.util.List;
 public class QuestionDaoHibernateImpl implements IQuestionDAO {
 
     @Autowired
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
 
     private SessionFactory getSessionFactory() {
-        return emf.unwrap(SessionFactory.class);
+        return sessionFactory;
     }
 
     private Session getCurrentSession() {

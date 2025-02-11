@@ -13,5 +13,6 @@ public interface IChoiceDAO {
     List<Choice> getChoicesByQuestionId(int questionId);
     void addChoice(Choice choice);
     void updateChoice(Choice choice);
+    Choice getChoiceById(int choiceId);
 
 }

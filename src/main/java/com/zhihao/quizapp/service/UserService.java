@@ -46,6 +46,8 @@ public class UserService {
         if(findUserByEmail(user.getEmail()) != null){
             return false;
         }
+        user.setIsActive(1);
+        user.setIsAdmin(0);
         userDAO.createUser(user);
         return true;
     }

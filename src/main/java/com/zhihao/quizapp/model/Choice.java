@@ -24,8 +24,9 @@ public class Choice {
     private Question question;
 
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "description",columnDefinition = "TEXT", nullable = false)
     private String description;
 
+    @Column(name = "is_correct", nullable = false)
     private Integer isCorrect;
 }

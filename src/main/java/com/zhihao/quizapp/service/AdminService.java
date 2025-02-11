@@ -68,6 +68,7 @@ public class AdminService {
         return questionDAO.getQuestions(offset, PAGE_SIZE);
     }
 
+    @Transactional
     public void toggleQuestionStatus(int questionId) {
         Question question = questionDAO.getQuestionById(questionId);
         if(question != null){
@@ -83,12 +84,14 @@ public class AdminService {
 
     @Transactional
     public void addQuestion(Question question, List<Choice> choices) {
+        question.setChoices(choices);
         for (Choice choice : choices) {
             choice.setQuestion(question);
-            choiceDAO.addChoice(choice);
         }
+        questionDAO.addQuestion(question);
     }
 
+    @Transactional
     public QuestionEditForm getQuestionEditForm(int questionId) {
         Question question = questionDAO.getQuestionById(questionId);
         List<Choice> choices = choiceDAO.getChoicesByQuestionId(questionId);
@@ -121,7 +124,7 @@ public class AdminService {
 
     @Transactional
     public void updateQuestion(QuestionEditForm form) {
-        Question question = new Question();
+        Question question = questionDAO.getQuestionById(form.getQuestionId());
         question.setQuestionId(form.getQuestionId());
 
         Category category = new Category();
@@ -131,36 +134,38 @@ public class AdminService {
         question.setDescription(form.getDescription());
         questionDAO.updateQuestion(question);
 
-        Choice choice1 = new Choice();
+        Choice choice1 = choiceDAO.getChoiceById(form.getChoice1Id());
         choice1.setChoiceId(form.getChoice1Id());
         choice1.setDescription(form.getChoice1());
         choice1.setIsCorrect(form.getCorrectChoice() == 1 ? 1 : 0);
         choiceDAO.updateChoice(choice1);
 
-        Choice choice2 = new Choice();
+        Choice choice2 = choiceDAO.getChoiceById(form.getChoice2Id());
         choice2.setChoiceId(form.getChoice2Id());
         choice2.setDescription(form.getChoice2());
         choice2.setIsCorrect(form.getCorrectChoice() == 2 ? 1 : 0);
         choiceDAO.updateChoice(choice2);
 
-        Choice choice3 = new Choice();
+        Choice choice3 = choiceDAO.getChoiceById(form.getChoice3Id());
         choice3.setChoiceId(form.getChoice3Id());
         choice3.setDescription(form.getChoice3());
         choice3.setIsCorrect(form.getCorrectChoice() == 3 ? 1 : 0);
         choiceDAO.updateChoice(choice3);
 
-        Choice choice4 = new Choice();
+        Choice choice4 = choiceDAO.getChoiceById(form.getChoice4Id());
         choice4.setChoiceId(form.getChoice4Id());
         choice4.setDescription(form.getChoice4());
         choice4.setIsCorrect(form.getCorrectChoice() == 4 ? 1 : 0);
         choiceDAO.updateChoice(choice4);
     }
 
+    @Transactional
     public List<Contact> getContacts(int page) {
         int offset = (page - 1) * PAGE_SIZE;
         return contactDAO.getContacts(offset, PAGE_SIZE);
     }
 
+    @Transactional
     public Contact getContactById(int contactId) {
         return contactDAO.getContactById(contactId);
     }

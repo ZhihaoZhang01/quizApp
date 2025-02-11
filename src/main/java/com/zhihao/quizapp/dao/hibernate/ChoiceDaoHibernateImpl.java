@@ -23,10 +23,10 @@ import java.util.List;
 public class ChoiceDaoHibernateImpl implements IChoiceDAO {
 
     @Autowired
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
 
     private SessionFactory getSessionFactory() {
-        return emf.unwrap(SessionFactory.class);
+        return sessionFactory;
     }
 
     private Session getCurrentSession() {
@@ -49,5 +49,10 @@ public class ChoiceDaoHibernateImpl implements IChoiceDAO {
     @Override
     public void updateChoice(Choice choice) {
         getCurrentSession().update(choice);
+    }
+
+    @Override
+    public Choice getChoiceById(int choiceId) {
+        return getCurrentSession().get(Choice.class, choiceId);
     }
 }

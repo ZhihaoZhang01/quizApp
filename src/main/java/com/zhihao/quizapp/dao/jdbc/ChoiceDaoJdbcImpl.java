@@ -38,4 +38,9 @@ public class ChoiceDaoJdbcImpl implements IChoiceDAO {
         String query = "UPDATE Choice SET description = ?, is_correct = ? WHERE choice_id = ?";
         jdbcTemplate.update(query, choice.getDescription(), choice.getIsCorrect(), choice.getChoiceId());
     }
+
+    @Override
+    public Choice getChoiceById(int choiceId) {
+        return null;
+    }
 }

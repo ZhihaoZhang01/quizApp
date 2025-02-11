@@ -25,10 +25,10 @@ import java.util.List;
 public class QuizQuestionDaoHibernateImpl implements IQuizQuestionDAO {
 
     @Autowired
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
 
     private SessionFactory getSessionFactory() {
-        return emf.unwrap(SessionFactory.class);
+        return sessionFactory;
     }
 
     private Session getCurrentSession() {

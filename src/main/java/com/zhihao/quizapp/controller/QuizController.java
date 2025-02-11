@@ -52,7 +52,7 @@ public class QuizController {
         return "redirect:/quiz?quizId=" + quizId;
     }
 
-    @GetMapping("/quiz1")
+    @GetMapping("/quiz")
     public String showQuiz(@RequestParam("quizId") int quizId, Model model, HttpSession session) {
         List<QuizQuestionDetail> quizDetails = quizService.getQuizQuestionDetails(quizId);
         long remainingTime = quizService.countTime(quizId);

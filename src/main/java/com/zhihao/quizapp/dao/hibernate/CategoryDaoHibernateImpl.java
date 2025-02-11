@@ -22,10 +22,10 @@ import java.util.List;
 @Primary
 public class CategoryDaoHibernateImpl implements ICategoryDAO {
     @Autowired
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
 
     private SessionFactory getSessionFactory() {
-        return emf.unwrap(SessionFactory.class);
+        return sessionFactory;
     }
 
     private Session getCurrentSession() {
