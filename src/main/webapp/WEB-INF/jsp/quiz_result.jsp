@@ -68,7 +68,6 @@
         <button type="button">Take Another Quiz</button>
     </a>
 </div>
-<%@ include file="footer.jsp" %>
 </body>
 </html>
 
